@@ -1,9 +1,19 @@
 body {
     
-    background-image: url('../img/fondotrivial.png');
+    background-color: #befac9;
+}
+
+h1 {
+    text-align: center;
 }
 
 header {
+    height: 80px;
     padding: 1em;
-    background: #ff7d00;
+    background: #bee6fa;
+    display: block;
+}
+
+.modal-content {
+    margin-top: 25%;
 }
