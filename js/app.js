@@ -4,100 +4,70 @@ const preguntas = [
         id: 2022100701,
         titulo: "Lorem ipsum dolor sit amet ",
         descripcion: "LLLALLALALALALALALALALALLALALALA",
-        opcionA: "Hí",
-        opcionB: "U",
-        opcionC: "Pero que dise",
-        opcionD: "ni de blah",
+        opciones: ["Hí","U","Pero que dise","ni de blas"],
         correcta:0    
     },
     { 
         id: 2022100702,
         titulo: "No puedor no puedor ",
         descripcion: "LLLALLALALALALALALALALALLALALALA",
-        opcionA: "Lala",
-        opcionB: "Lele",
-        opcionC: "Lili",
-        opcionD: "Lolo",
+        opciones: ["Lala","Lele","Lili","Lolo"],
         correcta:1     
     },
     { 
         id: 2022100703,
         titulo: "No puedor no puedor ",
         descripcion: "LLLALLALALALALALALALALALLALALALA",
-        opcionA: "Lala",
-        opcionB: "Lele",
-        opcionC: "Lili",
-        opcionD: "Lolo",
+        opciones: ["Uno","Dos","Tres","Cuatro"],
         correcta:2    
     },
     { 
         id: 2022100704,
         titulo: "No puedor no puedor ",
         descripcion: "LLLALLALALALALALALALALALLALALALA",
-        opcionA: "Lala",
-        opcionB: "Lele",
-        opcionC: "Lili",
-        opcionD: "Lolo",
+        opciones: ["Uno","Dos","Tres","Cuatro"],
         correcta:3  
     },
     { 
         id: 2022100705,
         titulo: "No puedor no puedor ",
         descripcion: "LLLALLALALALALALALALALALLALALALA",
-        opcionA: "Lala",
-        opcionB: "Lele",
-        opcionC: "Lili",
-        opcionD: "Lolo" ,
+        opciones: ["Uno","Dos","Tres","Cuatro"],
         correcta:2   
     },
     { 
         id: 2022100706,
         titulo: "No puedor no puedor ",
         descripcion: "LLLALLALALALALALALALALALLALALALA",
-        opcionA: "Lala",
-        opcionB: "Lele",
-        opcionC: "Lili",
-        opcionD: "Lolo",
+        opciones: ["Uno","Dos","Tres","Cuatro"],
         correcta:1    
     },
     { 
         id: 2022100707,
         titulo: "No puedor no puedor ",
         descripcion: "LLLALLALALALALALALALALALLALALALA",
-        opcionA: "Lala",
-        opcionB: "Lele",
-        opcionC: "Lili",
-        opcionD: "Lolo",
+        opciones: ["Uno","Dos","Tres","Cuatro"],
         correcta:0    
     },
     { 
         id: 2022100708,
         titulo: "No puedor no puedor ",
         descripcion: "LLLALLALALALALALALALALALLALALALA",
-        opcionA: "Lala",
-        opcionB: "Lele",
-        opcionC: "Lili",
-        opcionD: "Lolo",
+        opciones: ["Lala","Lele","Lili","Lolo"],
         correcta:0    
     },
     { 
         id: 2022100709,
         titulo: "No puedor no puedor ",
         descripcion: "LLLALLALALALALALALALALALLALALALA",
-        opcionA: "Lala",
-        opcionB: "Lele",
-        opcionC: "Lili",
-        opcionD: "Lolo",
+        opciones: ["Lala","Lele","Lili","Lolo"],
         correcta:1    
     },
     { 
         id: 2022100710,
         titulo: "No puedor no puedor ",
         descripcion: "LLLALLALALALALALALALALALLALALALA",
-        opcionA: "Lala",
-        opcionB: "Lele",
-        opcionC: "Lili",
-        opcionD: "Lolo",
+        opciones: ["Hí","U","Pero que dise","ni de blas"],
         correcta:0    
     }
 ]
@@ -110,6 +80,8 @@ let puntuacion=0;
 const nuevaPartida = () => {
     modalMenu.style="none"
 
+    puntuacion=0
+    actualizaPuntuacion(puntuacion)
     // Realizamos una selección de preguntas
 
     // Primero creamos un array de index aleatorios que no se repitan
@@ -122,15 +94,36 @@ const nuevaPartida = () => {
     setTimeout(()=>modalJuego.style="display:block",1000)
 }
 
-const muestraPuntos = () => {
+// Mostramos la pantalla final de muestra de puntos
+const muestraPuntos = (puntos) => {
+    modalJuego.style="none"
+    setTimeout(()=>
+    {
+        modalPuntos.style="display:block";
+    }
+    ,500)
+
+    setTimeout(() => {
+        barra2.style.width=puntos+'%'
+        barra2.ariaValueNow=puntos;
+    },800)
 
 }
+
 // Actualiza la barra de progreso
 const actualizaPuntuacion = (puntos) => {
     barra.style.width=puntos+'%'
     barra.ariaValueNow=puntos;
 }
 
+
+// Salir al menu principal
+const volverMenu = () => {
+    modalPuntos.style="display:none";
+    setTimeout(()=>modalMenu.style="display:block",500)
+}
+
+// Actualización del modal de pregunta para mostrar una nueva pregunta
 const mostrarPregunta = listaPreguntas => {
     console.log(listaPreguntas.length)
     if (listaPreguntas.length >0 )
@@ -139,10 +132,11 @@ const mostrarPregunta = listaPreguntas => {
         titulo.innerHTML=listaPreguntas[0].titulo;
         idPregunta.innerHTML=listaPreguntas[0].id;
         descripcion.innerHTML=listaPreguntas[0].descripcion;
-        botonesOpciones[0].innerHTML=listaPreguntas[0].opcionA;
-        botonesOpciones[1].innerHTML=listaPreguntas[0].opcionB;
-        botonesOpciones[2].innerHTML=listaPreguntas[0].opcionC;
-        botonesOpciones[3].innerHTML=listaPreguntas[0].opcionD;
+
+        //? Como hacer esto con bucles?
+
+        for (let i=0;i<botonesOpciones.length;i++)
+            botonesOpciones[i].innerHTML=listaPreguntas[0].opciones[i];    
 
         // En los atributos de las opciones, activamos la que es correcta
 
@@ -168,7 +162,7 @@ const mostrarPregunta = listaPreguntas => {
         listaPreguntas.shift()
     }
     else {
-
+        muestraPuntos(puntuacion)
     }
 
         // Limpiamos de efectos las preguntas
@@ -187,7 +181,7 @@ const mostrarPregunta = listaPreguntas => {
 
 const seleccionaOpcion = (e) => {
     //Comprobamos el valor del atributo para saber si es correcta la opcion seleccionada
-   
+
     // En función de si la opcion es correcta o incorrecta, se activa un efecto y sumamos puntos
     if(e.target.getAttribute('data-correcta') === 'true')
         {
@@ -219,8 +213,11 @@ const titulo = document.querySelector("#titulo-pregunta")
 const idPregunta = document.querySelector("#id-pregunta")
 const descripcion = document.querySelector("#descripcion-pregunta")
 const botonesOpciones = document.querySelectorAll(".boton-opciones")
+const botonSalir = document.querySelector("#salir-menu")
+const repetir = document.querySelector("#repetir")
 
 const barra = document.querySelector("#barra-progreso")
+const barra2 = document.querySelector("#barra-progreso-2")
 // Inicio, mostramos el modal
 modalMenu.style = "display:block"
 
@@ -239,5 +236,7 @@ const desactivarBotones = () => {
 // Asociamos eventos a botones:
 const botonNuevaPartida = document.querySelector('#nueva-partida')
 botonNuevaPartida.addEventListener("click",nuevaPartida)
+repetir.addEventListener("click",nuevaPartida)
+botonSalir.addEventListener("click",volverMenu)
 
 
