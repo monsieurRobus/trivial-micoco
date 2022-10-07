@@ -13,6 +13,9 @@
 <body>
     <header>
         <h1>TRIVIA</h1>
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
     </header>
 
     <!-- MODAL DEL MENÚ PRINCIPAL  -->
@@ -40,27 +43,28 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-
+                    <h1 id="titulo-pregunta"></h1>
+                    <span id="id-pregunta"></span>
                 </div>
                 <div class="modal-body">
-
+                    <p id="descripcion-pregunta"></p>
                 </div>
                 <div class="modal-footer ">
                     <div class="container">
                         <div class="row">
-                            <div class="col col-6">
-                                <butrton class="btn btn-primary">Prueba1</butrton>
+                            <div class="col">
+                                <butrton id ="opcionA" class="boton-opciones btn btn-primary">Prueba1</butrton>
                             </div>
-                            <div class="col col-6">
-                                <buton class="btn btn-warning">Prueba2</buton>
+                            <div class="col">
+                                <buton id ="opcionB" class="boton-opciones btn btn-warning">Prueba2</buton>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <button class="btn btn-danger">Prueba3</button>
+                                <button id ="opcionC" class="boton-opciones btn btn-danger">Prueba3</button>
                             </div>
                             <div class="col">
-                                <button class="btn btn-success">Prueba4</button>
+                                <button id ="opcionD" class="boton-opciones btn btn-success">Prueba4</button>
                             </div>
                         </div>
                     </div>                    
