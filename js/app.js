@@ -77,15 +77,22 @@ const preguntas = [
 let seleccion=[];
 let puntuacion=0;
 // Nueva partida
-const nuevaPartida = () => {
-    modalMenu.style="none"
 
+const reseteoJuego = () => {
     puntuacion=0
     actualizaPuntuacion(puntuacion)
-    // Realizamos una selección de preguntas
+    barra2.style.width=0+'%'
+    barra2.ariaValueNow=0;
+}
 
+const nuevaPartida = () => {
+    modalMenu.style="none"
+    reseteoJuego()
+    
+    // Realizamos una selección de preguntas
+    const preguntasOrdenar = [...preguntas]
     // Primero creamos un array de index aleatorios que no se repitan
-    seleccion = preguntas.sort(() => {return Math.random() - 0.5}) // desordenamos array
+    seleccion = preguntasOrdenar.sort(() => {return Math.random() - 0.5}) // desordenamos array
     
     // Mostramos la primera pregunta
     mostrarPregunta(seleccion)
@@ -125,7 +132,6 @@ const volverMenu = () => {
 
 // Actualización del modal de pregunta para mostrar una nueva pregunta
 const mostrarPregunta = listaPreguntas => {
-    console.log(listaPreguntas.length)
     if (listaPreguntas.length >0 )
     {    
         // Escribimos en cada campo el contenido de la pregunta
