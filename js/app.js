@@ -126,57 +126,86 @@ const muestraPuntos = () => {
 
 }
 // Actualiza la barra de progreso
-const actualizaPuntuacion = () => {
-    
+const actualizaPuntuacion = (puntos) => {
+    barra.style.width=puntos+'%'
+    barra.ariaValueNow=puntos;
 }
 
 const mostrarPregunta = listaPreguntas => {
-    titulo.innerHTML=listaPreguntas[0].titulo
-    idPregunta.innerHTML=listaPreguntas[0].id
-    descripcion.innerHTML=listaPreguntas[0].descripcion
-    opcionA.innerHTML=listaPreguntas[0].opcionA
-    opcionB.innerHTML=listaPreguntas[0].opcionB
-    opcionC.innerHTML=listaPreguntas[0].opcionC
-    opcionD.innerHTML=listaPreguntas[0].opcionD
+    console.log(listaPreguntas.length)
+    if (listaPreguntas.length >0 )
+    {    
+        // Escribimos en cada campo el contenido de la pregunta
+        titulo.innerHTML=listaPreguntas[0].titulo;
+        idPregunta.innerHTML=listaPreguntas[0].id;
+        descripcion.innerHTML=listaPreguntas[0].descripcion;
+        botonesOpciones[0].innerHTML=listaPreguntas[0].opcionA;
+        botonesOpciones[1].innerHTML=listaPreguntas[0].opcionB;
+        botonesOpciones[2].innerHTML=listaPreguntas[0].opcionC;
+        botonesOpciones[3].innerHTML=listaPreguntas[0].opcionD;
 
-    opcionA.dataset.correcta = false;
-    opcionB.dataset.correcta = false;
-    opcionC.dataset.correcta = false;
-    opcionD.dataset.correcta = false;
+        // En los atributos de las opciones, activamos la que es correcta
 
-    switch(listaPreguntas[0].correcta){
-        case 0:
-            opcionA.dataset.correcta = true;
-            break;
-        case 1:
-            opcionB.dataset.correcta = true;
-            break;
-        case 2:
-            opcionC.dataset.correcta = true;
-            break;
-        case 3:
-            opcionD.dataset.correcta = true;
-            break;
+        for(opcion of botonesOpciones)
+            opcion.dataset.correcta = false;
+
+        switch(listaPreguntas[0].correcta){
+            case 0:
+                botonesOpciones[0].dataset.correcta = true;
+                break;
+            case 1:
+                botonesOpciones[1].dataset.correcta = true;
+                break;
+            case 2:
+                botonesOpciones[2].dataset.correcta = true;
+                break;
+            case 3:
+                botonesOpciones[3].dataset.correcta = true;
+                break;
+
+        }
+        // Eliminamos la pregunta de la selección
+        listaPreguntas.shift()
+    }
+    else {
 
     }
-    listaPreguntas.shift()
+
+        // Limpiamos de efectos las preguntas
+        for(opcion of botonesOpciones)
+            {
+                opcion.classList.remove("correcto")
+                opcion.classList.remove("incorrecto")
+            }
+
+            activarBotones()
+
     
+
+
 }
 
 const seleccionaOpcion = (e) => {
     //Comprobamos el valor del atributo para saber si es correcta la opcion seleccionada
-    console.log(e.target.getAttribute('data-correcta'))
+   
+    // En función de si la opcion es correcta o incorrecta, se activa un efecto y sumamos puntos
     if(e.target.getAttribute('data-correcta') === 'true')
         {
             puntuacion+=10;
+            e.target.classList.add("correcto")
+            
         }
     else   
         {
-            puntuacion+=10;
+            e.target.classList.add("incorrecto")
         }
+        // Desactivamos los "listeners" de los botones
+        desactivarBotones()
+        actualizaPuntuacion(puntuacion)
 
-        actualizaPuntuacion()
-
+        // Activamos un temporizador para mostrar la siguiente pregunta
+        setTimeout(()=>mostrarPregunta(seleccion),2000);
+        
 }
 
 // Modales a manipular
@@ -189,19 +218,26 @@ const modalPuntos = document.querySelector("#puntuacion-final")
 const titulo = document.querySelector("#titulo-pregunta")
 const idPregunta = document.querySelector("#id-pregunta")
 const descripcion = document.querySelector("#descripcion-pregunta")
-const opcionA = document.querySelector("#opcionA")
-const opcionB = document.querySelector("#opcionB")
-const opcionC = document.querySelector("#opcionC")
-const opcionD = document.querySelector("#opcionD")
+const botonesOpciones = document.querySelectorAll(".boton-opciones")
 
+const barra = document.querySelector("#barra-progreso")
 // Inicio, mostramos el modal
 modalMenu.style = "display:block"
+
+const activarBotones = () => {
+
+    for(opcion of botonesOpciones)
+        opcion.addEventListener("click",seleccionaOpcion)
+
+}
+
+const desactivarBotones = () => {
+    for(opcion of botonesOpciones)
+        opcion.removeEventListener("click",seleccionaOpcion)
+}
 
 // Asociamos eventos a botones:
 const botonNuevaPartida = document.querySelector('#nueva-partida')
 botonNuevaPartida.addEventListener("click",nuevaPartida)
-opcionA.addEventListener("click",seleccionaOpcion)
-opcionB.addEventListener("click",seleccionaOpcion)
-opcionC.addEventListener("click",seleccionaOpcion)
-opcionD.addEventListener("click",seleccionaOpcion)
+
 
